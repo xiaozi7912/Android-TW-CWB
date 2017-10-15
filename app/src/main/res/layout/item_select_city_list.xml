@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_select_city_list_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="item_select_clity_list_name_text" />
+
+        <TextView
+            android:id="@+id/item_select_city_list_data_id_2_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="item_select_clity_list_data_id_2_text" />
+
+        <TextView
+            android:id="@+id/item_select_clity_list_data_id_7_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="item_select_clity_list_data_id_7_text" />
+    </LinearLayout>
+</LinearLayout>
