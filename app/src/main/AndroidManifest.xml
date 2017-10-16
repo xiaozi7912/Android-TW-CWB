@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xiaozi.taiwan.cwb">
+<manifest package="com.xiaozi.taiwan.cwb"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Weather36Activity"></activity>
+        <activity android:name=".Weather2DaysActivity"></activity>
     </application>
 
 </manifest>

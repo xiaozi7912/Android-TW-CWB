@@ -5,13 +5,13 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/main_show_weather_36_button"
+        android:id="@+id/weather_2days_select_city_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="三十六小時天氣預報" />
-    <Button
-        android:id="@+id/main_show_weather_2days_button"
+        android:text="Select City" />
+
+    <ListView
+        android:id="@+id/weather_2days_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="臺灣各縣市未來2天天氣預報" />
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -26,6 +26,7 @@ public class CWBManager extends RootManager {
     private static CWBManager mInstance = null;
 
     private final static String WEATHER_36_DATA_ID = "F-C0032-001";
+    private final static String WEATHER_2DAYS_DATA_ID = "F-D0047-089";
 
     public CWBManager(Context context) {
         super(context);
@@ -67,6 +68,17 @@ public class CWBManager extends RootManager {
         String url = String.format("%s/%s", BuildConfig.API_ROOT_CWB, WEATHER_36_DATA_ID);
         RequestParams params = new RequestParams();
         params.put("locationName", city);
+        params.put("sort", "time");
+        mAsyncHttpClient.get(url, params, handler);
+    }
+
+    public void getWeather2Days(String city, JsonHttpResponseHandler handler) {
+        Logger.i(LOG_TAG, "getWeather2Days");
+        Logger.d(LOG_TAG, "getWeather2Days city : " + city);
+        String url = String.format("%s/%s", BuildConfig.API_ROOT_CWB, WEATHER_2DAYS_DATA_ID);
+        RequestParams params = new RequestParams();
+        params.put("locationName", city);
+        params.put("sort", "time");
         mAsyncHttpClient.get(url, params, handler);
     }
 }

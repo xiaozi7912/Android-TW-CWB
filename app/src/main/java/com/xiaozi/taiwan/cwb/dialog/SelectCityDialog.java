@@ -101,7 +101,7 @@ public class SelectCityDialog extends RootDialog {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Logger.i(LOG_TAG, "onItemClick");
             mSelectedItem = mDataList.get(position);
-            Logger.d(LOG_TAG, "onItemClick mSelectedItem.name : " + mSelectedItem.name);
+            Logger.d(LOG_TAG, "onItemClick mSelectedItem.parameterName : " + mSelectedItem.name);
             Logger.d(LOG_TAG, "onItemClick mSelectedItem.dataId2 : " + mSelectedItem.dataId2);
             Logger.d(LOG_TAG, "onItemClick mSelectedItem.dataId7 : " + mSelectedItem.dataId7);
             if (mCallback != null) mCallback.onItemClick(mSelectedItem);

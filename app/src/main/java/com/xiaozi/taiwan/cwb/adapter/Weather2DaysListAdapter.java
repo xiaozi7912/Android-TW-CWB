@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xiaozi.taiwan.cwb.R;
-import com.xiaozi.taiwan.cwb.model.Weather36Model;
+import com.xiaozi.taiwan.cwb.model.Weather2DaysModel;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -15,10 +15,10 @@ import java.util.List;
  * Created by xiaoz on 2017-10-16.
  */
 
-public class Weather36ListAdapter extends RootAdapter {
-    private List<Weather36Model> mDataList = null;
+public class Weather2DaysListAdapter extends RootAdapter {
+    private List<Weather2DaysModel> mDataList = null;
 
-    public Weather36ListAdapter(Activity activity, List<Weather36Model> dataList) {
+    public Weather2DaysListAdapter(Activity activity, List<Weather2DaysModel> dataList) {
         super(activity);
         mDataList = dataList;
     }
@@ -43,7 +43,7 @@ public class Weather36ListAdapter extends RootAdapter {
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_weather_36_list, null, false);
+            convertView = mInflater.inflate(R.layout.item_weather_2days_list, null, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -51,16 +51,17 @@ public class Weather36ListAdapter extends RootAdapter {
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Weather36Model selectedItem = mDataList.get(position);
+        Weather2DaysModel selectedItem = mDataList.get(position);
         viewHolder.startTimeTextView.setText(String.format("%s - %s",
                 sdf.format(selectedItem.elementWx.startTime),
                 sdf.format(selectedItem.elementWx.endTime)));
-        viewHolder.wxTextView.setText(selectedItem.elementWx.parameterName);
+        viewHolder.wxTextView.setText(selectedItem.elementWx.elementValue);
         viewHolder.temperatureTextView.setText(String.format("%s ~ %s",
-                selectedItem.elementMinT.parameterName,
-                selectedItem.elementMaxT.parameterName));
-        viewHolder.popTextView.setText(selectedItem.elementPop.parameterName);
-        viewHolder.ciTextView.setText(selectedItem.elementCI.parameterName);
+                selectedItem.elementT.elementValue,
+                selectedItem.elementT.elementValue));
+//        viewHolder.popTextView.setText(selectedItem.elementPop.elementValue);
+        viewHolder.ciTextView.setText(selectedItem.elementCI.elementValue);
+        viewHolder.weatherDescriptionTextView.setText(selectedItem.elementWeatherDesc.elementValue);
         return convertView;
     }
 
@@ -70,6 +71,7 @@ public class Weather36ListAdapter extends RootAdapter {
         public TextView temperatureTextView = null;
         public TextView popTextView = null;
         public TextView ciTextView = null;
+        public TextView weatherDescriptionTextView = null;
 
         public ViewHolder(View rootView) {
             startTimeTextView = rootView.findViewById(R.id.item_weather_36_start_time_text);
@@ -77,6 +79,7 @@ public class Weather36ListAdapter extends RootAdapter {
             temperatureTextView = rootView.findViewById(R.id.item_weather_36_temperature_text);
             popTextView = rootView.findViewById(R.id.item_weather_36_pop_text);
             ciTextView = rootView.findViewById(R.id.item_weather_36_ci_text);
+            weatherDescriptionTextView = rootView.findViewById(R.id.item_weather_2days_weather_description_text);
         }
     }
 }
