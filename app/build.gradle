@@ -9,8 +9,8 @@ android {
         applicationId "com.xiaozi.taiwan.cwb"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 2017101522
-        versionName "0.0.1"
+        versionCode 2017101616
+        versionName "0.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'API_KEY_CWB', buildConfig.API_KEY_CWB
         buildConfigField 'String', 'API_ROOT_CWB', '"https://opendata.cwb.gov.tw/api/v1/rest/datastore"'
