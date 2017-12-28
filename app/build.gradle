@@ -13,6 +13,7 @@ android {
         versionName "0.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'API_KEY_CWB', buildConfig.API_KEY_CWB
+        buildConfigField 'String', 'APP_CENTER_SECRET', buildConfig.APP_CENTER_SECRET
         buildConfigField 'String', 'API_ROOT_CWB', '"https://opendata.cwb.gov.tw/api/v1/rest/datastore"'
     }
     buildTypes {
@@ -24,6 +25,8 @@ android {
 }
 
 dependencies {
+    def appCenterSdkVersion = '1.1.0'
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -31,4 +34,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':module-framework')
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    compile "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }

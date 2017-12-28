@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 import com.xiaozi.framework.libs.BaseActivity;
 import com.xiaozi.framework.libs.utils.Logger;
 
@@ -18,6 +21,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         Logger.init(BuildConfig.DEBUG);
+        AppCenter.start(getApplication(), BuildConfig.APP_CENTER_SECRET, Analytics.class, Crashes.class);
+
         initView();
     }
 
