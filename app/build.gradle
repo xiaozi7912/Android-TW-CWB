@@ -9,8 +9,8 @@ android {
         applicationId "com.xiaozi.taiwan.cwb"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 2017101616
-        versionName "0.0.2"
+        versionCode 2017122811
+        versionName "0.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'API_KEY_CWB', buildConfig.API_KEY_CWB
         buildConfigField 'String', 'APP_CENTER_SECRET', buildConfig.APP_CENTER_SECRET
