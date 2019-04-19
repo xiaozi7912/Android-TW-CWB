@@ -1,27 +1,22 @@
 package com.xiaozi.taiwan.cwb;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xiaozi.framework.libs.BaseActivity;
 import com.xiaozi.framework.libs.utils.Logger;
-import com.xiaozi.taiwan.cwb.adapter.Weather2DaysListAdapter;
 import com.xiaozi.taiwan.cwb.dialog.SelectCityDialog;
 import com.xiaozi.taiwan.cwb.manager.CWBManager;
 import com.xiaozi.taiwan.cwb.model.CityModel;
 import com.xiaozi.taiwan.cwb.model.Weather2DaysModel;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -31,13 +26,12 @@ import cz.msebera.android.httpclient.Header;
 
 public class Weather2DaysActivity extends BaseActivity {
     private Button mSelectCityButton = null;
-    private ListView mListView = null;
+    private RecyclerView mPOP12HRecyclerView = null;
+    private RecyclerView mATRecyclerView = null;
+    private RecyclerView mTRecyclerView = null;
 
     private SelectCityDialog mSelectCityDialog = null;
     private CityModel mSelectedItem = null;
-
-    private List<Weather2DaysModel> mDataList = null;
-    private Weather2DaysListAdapter mAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +46,9 @@ public class Weather2DaysActivity extends BaseActivity {
     protected void initView() {
         super.initView();
         mSelectCityButton = findViewById(R.id.weather_2days_select_city_button);
-        mListView = findViewById(R.id.weather_2days_listview);
+        mPOP12HRecyclerView = findViewById(R.id.weather_2days_pop12h_list);
+        mATRecyclerView = findViewById(R.id.weather_2days_at_list);
+        mTRecyclerView = findViewById(R.id.weather_2days_t_list);
 
         mSelectCityButton.setOnClickListener(mOnClickListener);
     }
@@ -87,71 +83,41 @@ public class Weather2DaysActivity extends BaseActivity {
                 Logger.d(LOG_TAG, "updateView onSuccess response : " + response);
                 boolean success = response.optBoolean("success");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                mDataList = new ArrayList<Weather2DaysModel>();
 
                 if (success) {
+                    Weather2DaysModel model = new Weather2DaysModel();
                     JSONArray weatherElements = response.optJSONObject("records").optJSONArray("locations")
                             .optJSONObject(0).optJSONArray("location")
                             .optJSONObject(0).optJSONArray("weatherElement");
                     int elementSize = weatherElements.length();
-                    int timeSize = weatherElements.optJSONObject(0).optJSONArray("time").length();
                     Logger.d(LOG_TAG, "updateView onSuccess weatherElements : " + weatherElements);
                     Logger.d(LOG_TAG, "updateView onSuccess elementSize : " + elementSize);
-                    Logger.d(LOG_TAG, "updateView onSuccess timeSize : " + timeSize);
 
-                    for (int i = 0; i < timeSize; i++) {
-                        JSONObject modelObject = new JSONObject();
-                        for (int j = 0; j < elementSize; j++) {
-                            JSONObject elementObject = weatherElements.optJSONObject(j);
-                            String elementName = elementObject.optString("elementName");
-                            JSONObject timeObject = elementObject.optJSONArray("time").optJSONObject(i);
-                            Logger.d(LOG_TAG, "updateView onSuccess i : " + i);
-                            Logger.d(LOG_TAG, "updateView onSuccess j : " + j);
-                            Logger.d(LOG_TAG, "updateView onSuccess elementName : " + elementName);
+                    for (int i = 0; i < elementSize; i++) {
+                        JSONObject elementObject = weatherElements.optJSONObject(i);
+                        String elementName = elementObject.optString("elementName");
+                        String description = elementObject.optString("description");
+                        JSONArray time = elementObject.optJSONArray("time");
+                        int timeSize = time.length();
 
-                            if (timeObject != null) {
-                                if (timeObject.has("startTime")) {
-                                    try {
-                                        timeObject.put("startTime", sdf.parse(timeObject.optString("startTime")).getTime());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                        Logger.d(LOG_TAG, "updateView onSuccess elementName : " + elementName);
+                        Logger.d(LOG_TAG, "updateView onSuccess description : " + description);
+                        Logger.d(LOG_TAG, "updateView onSuccess time.length : " + time.length());
 
-                                if (timeObject.has("endTime")) {
-                                    try {
-                                        timeObject.put("endTime", sdf.parse(timeObject.optString("endTime")).getTime());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                        for (int j = 0; j < timeSize; j++) {
+                            JSONObject timeObject = time.optJSONObject(j);
+                            Logger.d(LOG_TAG, "updateView onSuccess timeObject : " + timeObject);
 
-                                if (timeObject.has("dataTime")) {
-                                    try {
-                                        timeObject.put("dataTime", sdf.parse(timeObject.optString("dataTime")).getTime());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
+                            if (elementName.equals("T")) {
+                                model.addElementT(timeObject);
+                            } else if (elementName.equals("CI")) {
 
-                            try {
-                                modelObject.put(elementName, timeObject);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            } else if (elementName.equals("PoP6h")) {
+
                             }
                         }
-                        mDataList.add(new Weather2DaysModel(modelObject));
                     }
                 }
-                mAdapter = new Weather2DaysListAdapter(mActivity, mDataList);
-                mListView.setAdapter(mAdapter);
             }
 
             @Override

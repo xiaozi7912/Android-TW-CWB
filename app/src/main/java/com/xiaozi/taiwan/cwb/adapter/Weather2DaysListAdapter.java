@@ -52,16 +52,15 @@ public class Weather2DaysListAdapter extends RootAdapter {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Weather2DaysModel selectedItem = mDataList.get(position);
-        viewHolder.startTimeTextView.setText(String.format("%s - %s",
-                sdf.format(selectedItem.elementWx.startTime),
-                sdf.format(selectedItem.elementWx.endTime)));
-        viewHolder.wxTextView.setText(selectedItem.elementWx.elementValue);
+//        viewHolder.startTimeTextView.setText(String.format("%s - %s",
+//                sdf.format(selectedItem.elementWx.startTime), sdf.format(selectedItem.elementWx.endTime)));
+//        viewHolder.wxTextView.setText(String.format("%s %s",
+//                selectedItem.elementWx.dataList.get(0).get("value"), selectedItem.elementWx.dataList.get(1).get("value")));
         viewHolder.temperatureTextView.setText(String.format("%s ~ %s",
-                selectedItem.elementT.elementValue,
-                selectedItem.elementT.elementValue));
+                selectedItem.getElementT(position).elementValueList.get(0).get("value"), selectedItem.getElementT(position + 1).elementValueList.get(0).get("value")));
 //        viewHolder.popTextView.setText(selectedItem.elementPop.elementValue);
-        viewHolder.ciTextView.setText(selectedItem.elementCI.elementValue);
-        viewHolder.weatherDescriptionTextView.setText(selectedItem.elementWeatherDesc.elementValue);
+//        viewHolder.ciTextView.setText(selectedItem.elementCI.elementValue);
+//        viewHolder.weatherDescriptionTextView.setText(selectedItem.elementWeatherDesc.parameterValue);
         return convertView;
     }
 

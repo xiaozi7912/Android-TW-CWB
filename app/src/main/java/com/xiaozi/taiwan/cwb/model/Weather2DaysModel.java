@@ -1,18 +1,29 @@
 package com.xiaozi.taiwan.cwb.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xiaoz on 2017-10-16.
  */
 
 public class Weather2DaysModel extends RootModel {
+    private List<ElementT> mElementTList = null;
     public ElementT elementT = null;
     public ElementWind elementWind = null;
     public ElementCI elementCI = null;
     public ElementWx elementWx = null;
     public ElementPop elementPop = null;
     public ElementWeatherDesc elementWeatherDesc = null;
+
+    public Weather2DaysModel() {
+        mElementTList = new ArrayList<>();
+    }
 
     public Weather2DaysModel(JSONObject object) {
         super(object);
@@ -24,14 +35,32 @@ public class Weather2DaysModel extends RootModel {
         this.elementWeatherDesc = new ElementWeatherDesc(object.optJSONObject("WeatherDescription"));
     }
 
+    public void addElementT(JSONObject object) {
+        mElementTList.add(new ElementT(object));
+    }
+
+    public ElementT getElementT(int position) {
+        return mElementTList.get(position);
+    }
+
     public class ElementT extends RootModel {
-        public long dataTime = 0;
-        public String elementValue = null;
+        public String dataTime = null;
+        public List<Map<String, String>> elementValueList = null;
 
         public ElementT(JSONObject object) {
             super(object);
-            this.dataTime = object.optLong("dataTime");
-            this.elementValue = object.optString("elementValue");
+            JSONArray elementValue = object.optJSONArray("elementValue");
+            int elementValueSize = elementValue.length();
+
+            this.dataTime = object.optString("dataTime");
+            this.elementValueList = new ArrayList<Map<String, String>>();
+            for (int i = 0; i < elementValueSize; i++) {
+                JSONObject jsonObject = elementValue.optJSONObject(i);
+                HashMap<String, String> elementValueItem = new HashMap<>();
+                elementValueItem.put("value", jsonObject.optString("value"));
+                elementValueItem.put("measures", jsonObject.optString("measures"));
+                elementValueList.add(elementValueItem);
+            }
         }
     }
 
@@ -60,8 +89,8 @@ public class Weather2DaysModel extends RootModel {
             super(object);
             this.dataTime = object.optLong("dataTime");
             this.elementValue = object.optString("elementValue");
-            this.parameterName = object.optJSONArray("parameter").optJSONObject(0).optString("parameterName");
-            this.parameterValue = object.optJSONArray("parameter").optJSONObject(0).optString("parameterValue");
+            this.parameterName = object.optJSONArray("elementValue").optJSONObject(0).optString("measures");
+            this.parameterValue = object.optJSONArray("elementValue").optJSONObject(0).optString("value");
         }
     }
 
@@ -71,14 +100,23 @@ public class Weather2DaysModel extends RootModel {
         public String elementValue = null;
         public String parameterName = null;
         public String parameterValue = null;
+        public List<Map<String, String>> dataList = null;
 
         public ElementWx(JSONObject object) {
             super(object);
             this.startTime = object.optLong("startTime");
             this.endTime = object.optLong("endTime");
             this.elementValue = object.optString("elementValue");
-            this.parameterName = object.optJSONArray("parameter").optJSONObject(0).optString("parameterName");
-            this.parameterValue = object.optJSONArray("parameter").optJSONObject(0).optString("parameterValue");
+            this.dataList = new ArrayList<Map<String, String>>();
+
+            JSONArray jsonArray = object.optJSONArray("elementValue");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Map<String, String> item = new HashMap<>();
+
+                item.put("value", jsonArray.optJSONObject(i).optString("value"));
+                item.put("measures", jsonArray.optJSONObject(i).optString("measures"));
+                dataList.add(item);
+            }
         }
     }
 
@@ -99,12 +137,16 @@ public class Weather2DaysModel extends RootModel {
         public long startTime = 0;
         public long endTime = 0;
         public String elementValue = null;
+        public String parameterName = null;
+        public String parameterValue = null;
 
         public ElementWeatherDesc(JSONObject object) {
             super(object);
             this.startTime = object.optLong("startTime");
             this.endTime = object.optLong("endTime");
             this.elementValue = object.optString("elementValue");
+            this.parameterName = object.optJSONArray("elementValue").optJSONObject(0).optString("measures");
+            this.parameterValue = object.optJSONArray("elementValue").optJSONObject(0).optString("value");
         }
     }
 }

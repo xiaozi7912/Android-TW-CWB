@@ -10,8 +10,18 @@
         android:layout_height="wrap_content"
         android:text="Select City" />
 
-    <ListView
-        android:id="@+id/weather_2days_listview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/weather_2days_pop12h_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/weather_2days_at_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/weather_2days_t_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

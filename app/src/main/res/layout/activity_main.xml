@@ -4,14 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/main_show_weather_36_button"
+    <FrameLayout
+        android:id="@+id/main_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="三十六小時天氣預報" />
-    <Button
-        android:id="@+id/main_show_weather_2days_button"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="臺灣各縣市未來2天天氣預報" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/main_element_t_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="溫度" />
+    </LinearLayout>
 </LinearLayout>
